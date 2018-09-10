@@ -1,0 +1,198 @@
+% This file is part of sydetex.
+
+% sydetex is free software: you can redistribute it and/or modify
+% it under the terms of the GNU General Public License as published by
+% the Free Software Foundation, either version 3 of the License, or
+% any later version.
+
+% sydetex is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details.
+
+% You should have received a copy of the GNU General Public License
+% along with sydetex.  If not, see <https://www.gnu.org/licenses/>.
+
+
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{setspace}
+\usepackage{CJK}
+
+
+
+% THIS IS WHERE ALL THE SYDE STUFF IS
+\usepackage{sydestyle}
+
+
+
+% Reference tooling package settings - point to where the files are
+\graphicspath{{figures/}}
+
+\addbibresource{references.bib}
+
+\makeglossaries
+\input{glossary.tex}
+
+
+% hyperref is a prissy princess, so we import it here to prevent weirdness with sydetex.sty
+\usepackage{hyperref}
+\hypersetup{
+    bookmarks=false
+}
+
+
+
+% PERSONAL DETAILS HERE, this sets up title page
+\def\reportTitle{Designing a Circuit Protection Sensor Module}
+\def\reportDueDate{September 6, 2018}
+\def\studentName{Si Teng Liu}
+\def\studentNumber{20473965}
+\def\company{FireBright Corporation}
+\def\lastSemester{3A}
+
+
+
+% Form fitting ;)
+\title{\reportTitle}
+\author{\studentName}
+\studentnumber{\studentNumber}
+\lastsemester{\lastSemester}
+\date{\reportDueDate}
+\employer{\company}
+\employeraddress{
+\begin{CJK}{UTF8}{gbsn}
+松江区 莘砖公路 518号 16号楼, Shanghai, China
+\end{CJK}
+}
+
+
+
+% ------------------------------START OF DOCUMENT------------------------------
+
+% You shouldn't need to edit code above this line for the template to work as 
+% intended. Just fill in your content and it should work Just Like Magic (TM).
+
+\begin{document}
+
+    
+    \startindent
+	\makewtrtitle
+	\stopindent
+	
+	
+	\begin{singlespace}
+        \begin{flushright}
+        James Si Teng Liu\\
+    	251 Cochrane Terrace\\
+	    Milton, ON, Canada, L9T 8C8\\
+	    \end{flushright}
+
+
+		% TODO: CHECK ME IF IT'S STILL FIEGUTH
+		Dr. Paul Fieguth, Professor and Department Chair
+	
+		Systems Design Engineering
+	
+	    University of Waterloo
+	
+	    Waterloo, ON
+	
+	    N2L 3G1\\
+	
+		Dear Professor Fieguth,
+	\end{singlespace}
+    
+        I have prepared this report, ``\reportTitle" as my 3B Work Report for the Engineering team at \company. This report is the final of three that I must submit as part of my degree requirements, and it has not received any previous academic credit. This report was entirely written by me and has not received any previous academic credit at this or any other institution.\\
+    	
+    	FireBright designs and manufactures battery charging solutions for electric vehicles. Under the guidance of my manager Chen Jie, I was able to succcessfully produce the electrical specifications and final design of a circuit protection board.\\
+    	
+    	The purpose of this report is to detail the process and design choices made in the creation of this circuit protection module, as well as major points of learning through the process. \\
+
+
+	    \noindent
+	    Sincerely,\\
+	   % \includegraphics[scale =0.2]{signature}\\
+    	
+    	\studentName \\
+    	\studentNumber \\
+        3B Systems Design Engineering
+
+	% new page at the end of the letter.
+	\newpage
+
+
+	% Abstract
+	%\addcontentsline{toc}{section}{Abstract}
+	\begin{abstract}
+	    Fire safety is a critical component of battery technology, on the road to to fulfill this requirement for a new line of products, FireBright has commissioned a new module to address fire safety from both prevention and protection perspectives. This report details with the design and prototyping process of this module. The problem space is familiar territory to the company, with known sensitivity levels to tune the sensors towards. New issues include the demand for a smaller physical size, lower cost, and more robust layout.
+	    
+	    The solution relies mainly on a architectural shift from individual \acrfull{ocp} modules for sub-assemblies to a main \acrshort{ocp} module for a single product. A smaller footprint and more design robustness is borne from making more use of digital logic in place of hardware based detection. The trade-off being made is the speed of activation of the protective measures. Given that a short-circuit protection module is also being planned, this weakness can be shored up for mission-critical circuitry in sub-assemblies, while less critical circuits still enjoy the benefit of a 'centralised' protection system.
+	    
+	    As a result of the design and prototyping.
+	\end{abstract}
+
+
+	% Make a table of contents.
+	\phantomsection % this adds the correct hyperref link, if you add custom ToC sections (as per \addcontentsline) USE THIS EXACT ORDERING OF COMMANDS
+	\addcontentsline{toc}{section}{Table of Contents}
+	\tableofcontents
+
+	% List of figures and tables.
+	\phantomsection
+	\addcontentsline{toc}{section}{List of Figures}
+	\listoffigures
+	
+	
+	\phantomsection
+	\addcontentsline{toc}{section}{List of Tables}
+	\listoftables
+	
+	
+	\section{Introduction}
+    	\pagenumbering{arabic}  % Couldn't figure out how to automate this, but leave this line in to restart page numbers at 1 and with arabic numbers.
+	FireBright works in battery technology - specifically lithium-based battery solutions. Their main product is a battery hot-swap system for electric vehicles, for which they design and produce charging stations, battery packs, and vehicle specific framing. 
+	
+	\paragraph{}
+	Due to high energy density and the flammability of the pole materials, fire safety is a critical component of lithium battery maintenance. For the company's new line of products, there is a need for a smaller and more robust \acrfull{cpm} that can be fitted to many different assemblies. As an Engineering Student, designing, prototyping, and testing this module was the assigned task for my work term.
+	
+	
+	\section{Design Space}
+	As per the engineering design workflow in FireBright, a great deal of design choices have been made by the design team for a physical prototype to be green-lit. Specifically, input and output requirements of this module have already been determined, and a microcontroller unit has been selected. The design choices made by myself are entirely in the circuit design, component choice, and board layout to achieve the requirements while following good practice.
+	
+	\subsection{Pre-Determined Scope}
+	The scope consists of two main requirement sets - electrical input/output, and board safety. Electrical I/O being both upper limits to the electrical signal strength (voltage and current) for individual inputs and outputs, and the expected signal profiles. Board safety would consist of absolute maximum ratings for materials, failure modes, and arc distances.
+	
+	
+	
+    Electrical input and output parameters are tied to the components that have been already selected for use within the module. Specifically, this module
+	\subsection{Input and Output}
+	
+    \subsection{Developing Criteria}
+	
+	\section{Understanding Limitations}
+	\subsection{Resources}
+	\subsection{Tooling Available}
+	
+	
+	
+	\section{Developing Electrical Specifications}
+	\subsection{}
+	
+	\section{Developing Mechanical Specifications}
+	
+	\section{Final Electrical Design}
+	
+	\section{Component Selection}
+	
+	
+	
+    \printglossaries
+    
+    \phantomsection
+    \printbibliography[heading=bibintoc]
+	
+
+\end{document}
+
+
