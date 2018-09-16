@@ -194,27 +194,11 @@
   \subsection{Developing Criteria}
   Given the scope and requirements set out at the start of the project, a number of criteria can be extracted from the pre-determined components. The specifcations of the MCU will determine the required output levels of all the sensors, and the MCU controlled devices must necessarily respond to the signals that it is capable of delivering.
 
-  To that end, a connection diagram was made to 
-
-  \begin{table}[]
-    \caption{A connection chart detailing the input output connections (with directionality)}
-    \label{tab:connect_diag}
-    \begin{tabular}{rccccccccccc}
-      Transmitter \textbackslash Receiver & EFM8BB & MAX3485 & DT-CT & smoke & led & sound & relay & temp0 & temp1 & ldo3v3 & ldo5v0 \\
-      EFM8BB                              & -      & 1       &       &       & 1   & 1     & 1     &       &       &        &        \\
-      MAX3485                             & 1      & -       &       &       &     &       &       &       &       &        &        \\
-      DT-CT                               & *      &         & -     &       &     &       &       &       &       &        &        \\
-      smoke                               & 2      &         &       & -     &     &       &       &       &       &        &        \\
-      temp1                               & *      &         &       &       &     &       &       & -     &       &        &        \\
-      temp1                               & *      &         &       &       &     &       &       &       & -     &        &        \\
-      ldo3v3                              & 1      & 1       &       &       &     &       &       & 1     & 1     & -      &        \\
-      ldo5v0                              &        &         &       & 2     &     & 2     &       &       &       & 2      & -     
-    \end{tabular}
-  \end{table}
+  A quick connection diagram helped visualise the connections, and it was 
 
   \begin{figure}[]
     \centering
-    \caption{Connection chart detailing the input and output relationships between the components. The connections go from the components in the left column to the components in the top row.}
+    \caption{Connection chart detailing the input and output relationships between the components. The connections go from the components in the left column to the components in the top row. (1) denotes a 3.3V connection, (2) denotes a 5V connection, (*) denotes an analog (variable) connection. A later version is shown here which includes power routing that was not done at this step.}
     \label{fig:connect-diag}
     \includegraphics{connection-chart}
   \end{figure}
