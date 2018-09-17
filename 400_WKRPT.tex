@@ -207,21 +207,14 @@
   Given this result, designing the sensor circuitry around the specifications of the EFM8BB1 SoC would be a fairly direct way to accomplish the objectives of the system.
 
   \subsubsection{Other Options?}
-  Given the inflexible nature of the SoC - being pre-selected as a fixed part of the design - forcing the SoC to behave according to the sensor output may come at significant software cost.
+  Given the inflexible nature of the SoC being pre-selected as a fixed part of the design, forcing the SoC to behave according to the sensor output may come at significant software cost. \footnote{A cost-benefit analysis (with due consideration for the architecture) was done by the design team previous to this design cycle to select the SoC as it was likely to be the most expensive component in the module.}
 
   \paragraph{}
-  To futher explain, the SoC is a collection of Application Specific Integrated Circuits \acrshort{asic} that provide additional functionality to a CPU. For the EFM8BB1 in particular, there is an \acrfull{adc} \acrshort{asic} in the chip itself that is pre-set for a certain voltage range, but with an option to use an external voltage reference. However this requires an external voltage reference: an additional complexity to implement as a hard circuit, versus simply using the SoC as-is taking no additional board space.
+  To further explain, the SoC is a collection of Application Specific Integrated Circuits \acrshort{asic} that provide additional functionality to a CPU. For the EFM8BB1 in particular, there is an \acrfull{adc} \acrshort{asic} in the chip itself that is pre-set for a certain voltage range, but with an option to use an external voltage reference. However this requires an external voltage reference: an additional complexity to implement as a hard circuit, versus simply using the SoC as-is taking no additional board space.
+  
+  \paragraph{What if the SoC selection is bad?}
 
-  \section{Component Based Criteria}
-
-  From the datasheet of the EFM8BB1\cite{silabs:efm8bb1},
-
-  The operating voltage level of the EFM8BB1 family is 3.3V, thus the sensor circuitry must conform to this level. There eventually arose a need for a separate 5V signal level due to the smoke sensor's digital circuit, resolving this will be touched upon in section \ref{sec:devel-electr-design}.
-
-	\section{Understanding Limitations}
-	\subsection{Resources}
-  \subsubsection{Accuracy of Measurement Tools}
-	\subsection{Tooling Available}
+  
 	
 	
 	
@@ -234,6 +227,16 @@
 	
 	\section{Developing Mechanical Specifications}
 	
+	\section{Details and Datasheets}
+  T
+  From the datasheet of the EFM8BB1\cite{silabs:efm8bb1},
+
+  The operating voltage level of the EFM8BB1 family is 3.3V, thus the sensor circuitry must conform to this level. There eventually arose a need for a separate 5V signal level due to the smoke sensor's digital circuit, resolving this will be touched upon in section \ref{sec:devel-electr-design}.
+
+	\section{Understanding Limitations}
+	\subsection{Resources}
+  \subsubsection{Accuracy of Measurement Tools}
+	\subsection{Tooling Available}
 	
 	\section{Component Selection}
 	
