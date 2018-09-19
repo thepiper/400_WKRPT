@@ -150,38 +150,37 @@
 	
 	
 	\section{Introduction}
-    	\pagenumbering{arabic}  % Couldn't figure out how to automate this, but leave this line in to restart page numbers at 1 and with arabic numbers.
-	FireBright works in battery technology - specifically lithium-based battery solutions. Their main product is a battery hot-swap system for electric vehicles, for which they design and produce charging stations, battery packs, and vehicle specific framing. 
+  \pagenumbering{arabic}  % Couldn't figure out how to automate this, but leave this line in to restart page numbers at 1 and with arabic numbers.
+  FireBright works in battery technology - specifically lithium-based battery solutions. Their main product is a battery hot-swap system for electric vehicles, for which they design and produce charging stations, battery packs, and vehicle specific framing. 
 	
 	\paragraph{}
 	Due to high energy density and the flammability of the pole materials, fire safety is a critical component of lithium battery maintenance. For the company's new line of products, there is a need for a smaller and more robust \acrfull{cpm} that can be fitted to many different assemblies. As an Engineering Student, designing this module, prototyping, and testing the completed design was the assigned task for my work term.
 
-    \paragraph{A Note on Terminology and Linguistics} - This sproject was done in an electrical engineering dominated environment, as such the terminology used tends toward abbreviated units and electrical shorthand. They will be expanded and explained whenever possible.
+  \paragraph{A Note on Terminology and Linguistics} - This project was done in an electrical engineering dominated environment, as such the terminology used tends toward abbreviated units and electrical shorthand. They will be expanded and explained whenever possible.
   
-	\section{Design Space}
-	As per the engineering design workflow in FireBright, a great deal of design choices have already been made by the design team for a physical prototype to be green-lit. Specifically, input and output requirements of this module have already been determined, and a microcontroller unit has been selected. The design choices made by myself are entirely in the circuit design, component choice, and board layout to achieve the requirements while following good practice.
+  \section{Design Space}
+  As per the engineering design workflow in FireBright, a great deal of design choices have already been made by the design team for a physical prototype to be green-lit. The choices made include the objectives of the module (the main problem it addresses), an architectural outline of major required components, and a specific microcontroller choice. The design choices made by myself lie in the circuit design, component selection, and board layout to achieve the objectives of the module while following good engineering practice.
 
+  \paragraph{}
   As a first step, the design choices already made must be squared with the objectives. Some design choices are quite concrete, and this will eventually lead specifications developed around them. Ultimately, this will 
 
   \subsection{Objectives}
   This module's main purpose is to act as a safety mechanism guarding against and reporting power circuitry failure - specifically over-current situations and fire. It must be able to detect and report any current flow over the set limit along with the presence of a battery fire.
 
   \paragraph{}
-  To meet these objectives, an initial scope has already been set forth by the design team, with a number of design choices already made. Work done this term is built on top of the outlines previously developed. 
+  Finally, the module must be able to integrate into the existing solution system and future systems developed by FireBright. This process is discussed in detail in section \ref{sec:integration}. 
   
   \paragraph{}
-  Lastly, the module must be able to integrate into the existing solution system and future systems developed by FireBright. This process is discussed in detail in section~\ref{sec:integration}. 
-
+  To meet these objectives, an initial scope has already been set forth by the design team, with a number of design choices already made. Work done this term is built on top of the outlines previously developed.
 	
 	\subsection{Pre-Determined Scope\label{sec:pre-determined-scope}}
 	At the start of the \acrfull{cpm} project, the determined scope consists of an architectural outline (including mandatory components) and two main requirement sets - electrical input/output, and board safety. Electrical I/O being both upper limits to the electrical signal strength (voltage and current) for individual inputs and outputs, and the expected signal profiles. Board safety would consist of absolute maximum ratings for materials, failure modes, and arc distances.
 	
     \subsubsection{Architecture\label{sec:architecture}}
-    The \acrshort{cpm} is a collection of sensors feeding into a microcontroller, which will communicate the sensor data through a standard transmission protocol used in FireBright's other products. As a system, the module will monitor the sensor data and break a relay switch that controls the main power circuit should sensor readings surpass programmed thresholds. The thresholds have been pre-determined, thus will not be gone into in detail.
+    The \acrshort{cpm} is a collection of sensors feeding into a microcontroller, which will communicate the sensor data through a standard transmission protocol used in FireBright's other products. As a system, the module will monitor the sensor data and break a relay switch that controls the main power circuit should sensor readings surpass programmed thresholds. The thresholds have been pre-determined, thus will not be gone into in detail. 
 
     \paragraph{}
     The sensors deemed as required on this module are: two temperature sensors, one smoke sensor, and an AC current sensor. Three components have been chosen ahead of time as required - EFM8BB1 \acrfull{soc} , MAX3485 RS-485 transceiver, and a specific current sensing transformer.
-    
 
     \paragraph{Physical Response Systems}
     Sensory signals are also part of the requirement of the system, with controllable LED and buzzer components marked as required. 
@@ -197,7 +196,6 @@
 
     \subsection{Power considerations}
     As the module is going to be a safety mechanism, it is intended to stay powered at all times, thus power draw is specifically budgeted at less than 1 watt on average.
-
 	
     \subsection{Developing Specifications}
     Given the scope and requirements set out at the start of the project, a number of specifications can be extracted from the pre-determined components. These specifications come in the form of voltage levels, signal profiles, and other electrical details that actualize connections between the individual components.
