@@ -159,43 +159,56 @@
     \paragraph{}
 	The work with realizing the architecture of the module while following good engineering practice - working out details, in essence.
 
+  \subsection{Confidentiality}
+  Due to a confidentiality agreement, some details and most numbers are omitted or altered, and certain technologies used are excluded from mention.
+
+
   \paragraph{A Note on Terminology and Linguistics} - This project was done in an electrical engineering dominated environment, as such the terminology used tends toward abbreviated units and electrical shorthand. They will be expanded and explained whenever possible.
   
-  \section{Design Space}
-  Following the engineering design workflow in FireBright, a great deal of design choices have already been made by the design team for a functional prototype to be green-lit. The choices made include the objectives of the module (the main problem it addresses), an architectural outline of major required components, and a specific microcontroller choice.
+  \section{Understanding the Design Space}
+  Following the engineering design workflow in FireBright, a number of mandates have already been made by the design team for a functional prototype to be green-lit. The mandates include the objectives of the module (the main problem it addresses), an architectural outline of major required components, and a specific microcontroller choice.
 
   \paragraph{}
-  As a first step, the design choices already made must be squared with the objectives. Some design choices are quite concrete, and this will eventually lead specifications developed around them. Other
+  As a first step, the design mandates must be squared with the objectives of the module. 
 
   \subsection{Objectives}
-  This module's main purpose is to act as a safety mechanism guarding one unit\footnote{An assembly that uses between 100 watts and 1000 watts of pwoer.} against failure - specifically over-current and fire. It must be able to detect and report any current flow over the set limit along with the presence of a battery fire.
+  This module's main purpose is to act as a safety mechanism guarding an appliance \footnote{An assembly that uses between 100 watts and 1000 watts of pwoer.} against failure - specifically over-current and fire. A paraphrased list of specified objectives are as follows:
 
-  \paragraph{}
-  Finally, the module must be able to integrate into the existing solution system and future systems developed by FireBright. This process is discussed in detail in section \ref{sec:integration}. 
+  \begin{itemize}
+  \item The module must not be tied to the architecture of any particular appliance in a critical way. 
+  \item The module must be able to detect and report any current flow over a set limit.
+  \item The module must be able to detect and report the presence of fire.
+  \item Auditory and visual feedback must be provided at some level.
+  \item A safety mechanism must be baked in to halt or slow thermal runaway.
+  \end{itemize}
+
   
   \paragraph{}
-  To meet these objectives, an initial scope has already been set forth by the design team, with a number of design choices already made. Work done this term focuses on actualizing the outlines developed.
+  Finally, the module must be able to integrate into the existing solution system and future systems developed by FireBright. This process is discussed in detail in section \ref{sec:integration}. 
+
 	
-	\subsection{Prior Work\label{sec:prior-work}}
+	\subsection{Breakdown of Mandates\label{sec:breakdown-mandates}}
 	The established scope consists of an architectural outline (including mandatory components) and two main requirement sets - electrical input/output, and board safety. Electrical I/O being both upper limits to the electrical signal strength (voltage and current) for individual inputs and outputs, and the corresponding signal profiles. Board safety would consist of absolute maximum ratings for materials, failure modes, and arc distances.
 	
     \subsubsection{Architecture\label{sec:architecture}}
     As a unit, the \acrshort{cpm} was determined to be a collection of sensors feeding data into a microcontroller, which will communicate the sensor data through a standard transmission protocol used in FireBright's other products. As a system, the module will monitor the sensor data against programmed thresholds. Should the sensor readings exceed them, the module should break a relay switch controlling the monitored power circuit. The thresholds have been pre-determined, thus will not be gone into in detail. 
 
+    TODO: architecture diagram
+
     \paragraph{}
-    The sensors deemed as required on this module are: two temperature sensors, one smoke sensor, and an AC current sensor. Three components have been chosen ahead of time as required - EFM8BB1 \acrfull{soc} , MAX3485 RS-485 transceiver, and a specific current sensing transformer.
+    The sensors deemed as required on this module are: two temperature sensors, one smoke sensor, and an AC current sensor. Three components have been chosen ahead of time as required - a specific \acrfull{soc}, a specific RS-485 transceiver, and a specific current sensing transformer. I did not participate in these choices, thus for my part, they are treated as fixed constraints.
 
     \paragraph{Physical Response Systems}
-    Sensory signals are also part of the requirement of the system, with controllable LED and buzzer components marked as required. 
+    Sensory signals are also part of the requirement of the system, with controllable LED and buzzer components marked as required.
 
     \subsection{Input and Output} 
-    There are two main types of electrical communication between the various system components - signal and power. The power electric behaviour is outlined as a single power supply source, followed by power modulation units that filter and deliver steady power to the components. The specifics would be determined through the design process.
+    There are two main types of electrical communication between system components - signal and power. The power electric behaviour is outlined as a single power supply source, followed by power modulation units that filter and deliver steady power to the components. The specifics would be determined through the design process.
 
     \paragraph{}
-    The signal behaviour were also delivered as a general outline of component intercommunication \footnote{i.e. - Must have communication from sensor to SoC, SoC to transceiver, and so on.}. The final signal profiles were reached through design, testing, and analysis.
+    Signal routing was derived from required component intercommunication paths \footnote{i.e. - Must have connection from sensor to SoC, SoC to transceiver, and so on.}. The final signal profiles were reached through design, testing, and analysis of each individual signal route.
 
     \paragraph{}
-    Ultimately, input and output signal levels and limits are left as an excercise for the student to develop, with reference to the specified components - both explicitly named (SoC and Transceiver), and general (sensors needed, relay).
+    Ultimately, input and output signal levels and limits were left as an excercise for the student to develop, with reference to the specified components - both explicitly named (SoC and Transceiver), and general (sensors needed, relay).
 
     \subsection{Power considerations}
     As the module is going to be a safety mechanism, it is intended to stay powered at all times, thus power draw is specifically budgeted at less than 1 watt on average.
@@ -229,9 +242,11 @@
 	
 	
 	
-	\section{Developing Electrical Design\label{sec:devel-electr-design}} 
+	\section{Electrical Design Cycle\label{sec:devel-electr-design}} 
 
-  \subsection{Integration\label{sec:integration}}
+  With a better grasp of the problem at hand in terms of objectives, constraints, and good practice, a design cycle to produce a working electrical diagram can begin.
+
+  \subsection{\label{sec:integration}}
 
 	\subsection{Power}
   
