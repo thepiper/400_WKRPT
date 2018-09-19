@@ -168,19 +168,19 @@
   As a first step, the design choices already made must be squared with the objectives. Some design choices are quite concrete, and this will eventually lead specifications developed around them. Other
 
   \subsection{Objectives}
-  This module's main purpose is to act as a safety mechanism guarding against and reporting power circuitry failure - specifically over-current situations and fire. It must be able to detect and report any current flow over the set limit along with the presence of a battery fire.
+  This module's main purpose is to act as a safety mechanism guarding one unit\footnote{An assembly that uses between 100 watts and 1000 watts of pwoer.} against failure - specifically over-current and fire. It must be able to detect and report any current flow over the set limit along with the presence of a battery fire.
 
   \paragraph{}
   Finally, the module must be able to integrate into the existing solution system and future systems developed by FireBright. This process is discussed in detail in section \ref{sec:integration}. 
   
   \paragraph{}
-  To meet these objectives, an initial scope has already been set forth by the design team, with a number of design choices already made. Work done this term is built on top of the outlines previously developed.
+  To meet these objectives, an initial scope has already been set forth by the design team, with a number of design choices already made. Work done this term focuses on actualizing the outlines developed.
 	
-	\subsection{Pre-Determined Scope\label{sec:pre-determined-scope}}
-	At the start of the \acrfull{cpm} project, the determined scope consists of an architectural outline (including mandatory components) and two main requirement sets - electrical input/output, and board safety. Electrical I/O being both upper limits to the electrical signal strength (voltage and current) for individual inputs and outputs, and the expected signal profiles. Board safety would consist of absolute maximum ratings for materials, failure modes, and arc distances.
+	\subsection{Prior Work\label{sec:prior-work}}
+	The established scope consists of an architectural outline (including mandatory components) and two main requirement sets - electrical input/output, and board safety. Electrical I/O being both upper limits to the electrical signal strength (voltage and current) for individual inputs and outputs, and the corresponding signal profiles. Board safety would consist of absolute maximum ratings for materials, failure modes, and arc distances.
 	
     \subsubsection{Architecture\label{sec:architecture}}
-    The \acrshort{cpm} is a collection of sensors feeding into a microcontroller, which will communicate the sensor data through a standard transmission protocol used in FireBright's other products. As a system, the module will monitor the sensor data and break a relay switch that controls the main power circuit should sensor readings surpass programmed thresholds. The thresholds have been pre-determined, thus will not be gone into in detail. 
+    As a unit, the \acrshort{cpm} was determined to be a collection of sensors feeding data into a microcontroller, which will communicate the sensor data through a standard transmission protocol used in FireBright's other products. As a system, the module will monitor the sensor data against programmed thresholds. Should the sensor readings exceed them, the module should break a relay switch controlling the monitored power circuit. The thresholds have been pre-determined, thus will not be gone into in detail. 
 
     \paragraph{}
     The sensors deemed as required on this module are: two temperature sensors, one smoke sensor, and an AC current sensor. Three components have been chosen ahead of time as required - EFM8BB1 \acrfull{soc} , MAX3485 RS-485 transceiver, and a specific current sensing transformer.
