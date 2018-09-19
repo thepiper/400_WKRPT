@@ -151,18 +151,21 @@
 	
 	\section{Introduction}
   \pagenumbering{arabic}  % Couldn't figure out how to automate this, but leave this line in to restart page numbers at 1 and with arabic numbers.
-  FireBright works in battery technology - specifically lithium-based battery solutions. Their main product is a battery hot-swap system for electric vehicles, for which they design and produce charging stations, battery packs, and vehicle specific framing. 
+  FireBright works in battery technology - specifically lithium-based battery solutions. Their main product is a battery hot-swap system for electric vehicles. For which FireBright designs and produces charging stations, battery packs, and vehicle specific framing. 
 	
-	\paragraph{}
-	Due to high energy density and the flammability of the pole materials, fire safety is a critical component of lithium battery maintenance. For the company's new line of products, there is a need for a smaller and more robust \acrfull{cpm} that can be fitted to many different assemblies. As an Engineering Student, designing this module, prototyping, and testing the completed design was the assigned task for my work term.
+	\subsection{Problem Space}
+	Due to high energy density and the flammability of the pole materials, fire safety is a critical component of lithium battery operation. For the company's new line of products, there is a need for a smaller and more robust \acrfull{cpm} that can be fitted in many different assemblies. As an Engineering Student, designing this module, prototyping, and testing the completed design was the assigned task for my work term.
+	
+    \paragraph{}
+	The work with realizing the architecture of the module while following good engineering practice - working out details, in essence.
 
   \paragraph{A Note on Terminology and Linguistics} - This project was done in an electrical engineering dominated environment, as such the terminology used tends toward abbreviated units and electrical shorthand. They will be expanded and explained whenever possible.
   
   \section{Design Space}
-  As per the engineering design workflow in FireBright, a great deal of design choices have already been made by the design team for a physical prototype to be green-lit. The choices made include the objectives of the module (the main problem it addresses), an architectural outline of major required components, and a specific microcontroller choice. The design choices made by myself lie in the circuit design, component selection, and board layout to achieve the objectives of the module while following good engineering practice.
+  As per the engineering design workflow in FireBright, a great deal of design choices have already been made by the design team for a physical prototype to be green-lit. The choices made include the objectives of the module (the main problem it addresses), an architectural outline of major required components, and a specific microcontroller choice.
 
   \paragraph{}
-  As a first step, the design choices already made must be squared with the objectives. Some design choices are quite concrete, and this will eventually lead specifications developed around them. Ultimately, this will 
+  As a first step, the design choices already made must be squared with the objectives. Some design choices are quite concrete, and this will eventually lead specifications developed around them. Other
 
   \subsection{Objectives}
   This module's main purpose is to act as a safety mechanism guarding against and reporting power circuitry failure - specifically over-current situations and fire. It must be able to detect and report any current flow over the set limit along with the presence of a battery fire.
