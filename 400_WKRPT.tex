@@ -184,7 +184,7 @@
 
   
   \paragraph{}
-  Finally, the module must be able to integrate into the existing solution system and future systems developed by FireBright. This process is discussed in detail in section \ref{sec:integration}. 
+  Finally, the module must be able to integrate into the existing solution system and future systems developed by FireBright.
 
 	
 	\subsection{Breakdown of Mandates\label{sec:breakdown-mandates}}
@@ -208,18 +208,22 @@
   Signal routing was derived from required component intercommunication paths \footnote{i.e. - Must have connection from sensor to SoC, SoC to transceiver, and so on.}. The final signal profiles were reached through design, testing, and analysis of each individual signal route.
 
   \paragraph{}
-  Ultimately, input and output signal levels and limits were left as an excercise for the student to develop, with reference to the specified components - both explicitly named (SoC and Transceiver), and general (sensors needed, relay).
+  Ultimately, input and output signal levels and limits were left as an excercise for the student to develop with reference to the specified components - both explicitly named and general (sensors needed, relay). The explicitly named components are as follows:
+
+  \begin{itemize}
+  \item \acrlong{soc} - EFM8BB family
+  \item Transceiver - MAX3845 RS-485 Transceiver
+  \end{itemize}
   
   \subsection{Power considerations}
   As the module is going to be a safety mechanism, it is intended to stay powered at all times, thus power draw is specifically budgeted at less than 1 watt on average.
 	
   \subsection{Developing Specifications}
-  Given the scope and requirements set out at the start of the project, a number of specifications can be extracted from the pre-determined components. These specifications come in the form of voltage levels, signal profiles, and other electrical details that actualize connections between the individual components.
+  A number of specifications can be extracted from the mandated components. These specifications come in the form of operating voltage level, signal profiles, and other electrical details that actualize connections between the individual components.
 
-  It turns out the operating range and behaviour of the SoC alone is sufficient to determine specifications of all sensor circuits. Furthermore, the SoC controlled devices must necessarily respond to the signals that the chip is capable of delivering - i.e. if the chip can only provide signals at 3.3V, a switch requiring 5V cannot be directly controlled by the SoC.
 
   \paragraph{}
-  A quick connection diagram (Figure \ref{fig:connect-diag}) helped visualise the connections. The connections go from the components in the left column to the components in the top row. (1) denotes a 3.3V connection, (2) denotes a 5V connection, (*) denotes an analog (variable voltage level) connection. A later version is shown here which includes power routing that was not done at this step. From the diagram, it was evident that most electrical connectivity is (as expected) centered around the SoC. 
+  A quick connection diagram (Figure~\ref{fig:connect-diag}) helped categorize the connections. The route is transmitted from the components in the left column and is received by the components in the top row. As the original diagram was lost, a similar diagram from later in the design process (with power routing completed) is shown here. (1) denotes a 3.3V connection, (2) denotes a 5V connection, (*) denotes an analog (variable voltage level) connection. From the diagram, it was evident that most electrical connectivity is (as expected) centered around the SoC. 
   
   \begin{figure}[]
     \centering
@@ -235,7 +239,10 @@
   
     \paragraph{}
     To further explain, a \acrlong{soc} is a collection of Application Specific Integrated Circuits \acrshort{asic} that provide additional functionality to a CPU. For the EFM8BB1 in particular, there is an \acrfull{adc} \acrshort{asic} in the chip itself that is pre-set for a certain voltage range, but with an option to use an external voltage reference. However this requires an external voltage reference: an additional complexity to implement as a hard circuit, versus simply using the SoC as-is requiring no additional board space.
-  
+
+    \paragraph{}
+    It turns out the operating range and behaviour of the SoC alone is sufficient to determine specifications of all sensor circuits (see section~\ref{sec:understanding-soc} for details). 
+
     \paragraph{What if the SoC selection is bad?}
     Is a very real and pertinent question to the overall success of the design. Given the needs of the module, the SoC selection was heavily based on unit price relative was heavily based on unit price relative was heavily based on unit price relative to the capabilities of the SoC. This will be further touched on in section~\ref{sec:select-core-comp}
 
@@ -243,17 +250,20 @@
 
   Starting the design cycle with the given objectives, a simple block diagram was drawn from the connection chart to help visualize the organization of the circuits.
 
-  TODO: block diagram of subcircuits
+  TODO: block diagram of subcircuits - all subcircuits in blocks
 
-  With this visualization, it was apparent that the \acrshort{soc} took up the lion's share of connective complexity. It follows that the limitations and capabilities of the chip must be fully understood in order to .
+  \paragraph{}
+  Since the SoC is a single unit (with fixed electrical properties), the only way to ensure the signals between the I/O and the SoC reach agreement is to tune the I/O circuits in accord with the SoC's specifications. Furthermore, since the SoC is required to act on the sensor data, the SoC controlled devices must necessarily respond to the signals that the chip is capable of delivering. Explicitly speaking, if the chip can only provide signals at 3.3V, a switch requiring 5V cannot be directly controlled by the SoC and must be redesigned.
   
-  \subsection{Understanding the SoC}
-
-  From the connection diagram and subsequent block diagram, it was determined the SoC is the core component, having the most connections with the greatest level of complexity. Thus gaining a strong
+  \paragraph{}
+  It follows that the limitations and capabilities of the EFM8BB chip must be fully understood in order to properly design the I/O circuitry.
   
-	
+  \subsection{Understanding the EFM8BB\label{sec:understanding-soc}}
 
-  With a better grasp of the problem at hand in terms of objectives, constraints, and good practice, a design cycle to produce a working electrical diagram can begin.
+  The EFM8BB is a well established microchip architecture. The datasheet is complete, and the user manual highly informative - with detailed input/output specifications and operational instructions. This is the starting point for all the sensor circuit design.
+
+  \subsubsection{Pinout}
+  
 
   \subsection{Initial Design}
 
