@@ -214,8 +214,8 @@
   Ultimately, input and output signal levels and limits were left as an excercise for the student to develop with reference to the specified components - both explicitly named and general (sensors needed, relay). The explicitly named components are as follows:
 
   \begin{itemize}
-  \item \acrlong{soc} - EFM8BB family
-  \item Transceiver - MAX3845 RS-485 Transceiver
+  \item \acrlong{soc} - EFM8BB1 in QFN20 package
+  \item Transceiver - MAX3845 RS-485 Transceiver in SOP-8 package
   \end{itemize}
   
   \subsection{Power considerations}
@@ -263,10 +263,19 @@
   
   \subsection{Understanding the EFM8BB\label{sec:understanding-soc}}
 
-  The EFM8BB is a well established microchip architecture. The datasheet is complete, and the user manual highly informative - with detailed input/output specifications and operational instructions. This is the starting point for all the sensor circuit design.
+  The EFM8BB1 is a well established microchip architecture. The datasheet is complete, and the user manual highly informative - with detailed input/output specifications and operational instructions. This is the starting point for all the sensor circuit design.
 
+
+  \paragraph{}
+  All conclusions in this section are drawn from the datasheet \cite{silabs:efm8bb1ds} and the reference manual\cite{silabs:efm8bb1rm} of the EFM8BB1. 
+
+  
   \subsubsection{Pinout}
-  yikes
+  The QFN20 package implies a 20 pin scheme. Following the pin definitions given by the datasheet, a total of 16 pins can be used for I/O purposes, with 4 reserved for power supply and programming.
+
+  
+
+  TODO: pinout diagram of efm8bb
 
   \subsection{Initial Design}
 
@@ -282,7 +291,6 @@
 	
 	\section{Details and Datasheets}
   T
-  From the datasheet of the EFM8BB1\cite{silabs:efm8bb1},
 
   The operating voltage level of the EFM8BB1 family is 3.3V, thus the sensor circuitry must conform to this level. There eventually arose a need for a separate 5V signal level due to the smoke sensor's digital circuit, resolving this will be touched upon in section \ref{sec:devel-electr-design}.
 
