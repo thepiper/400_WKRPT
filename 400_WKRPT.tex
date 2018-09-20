@@ -172,7 +172,7 @@
   As a first step, the design mandates must be squared with the objectives of the module. 
 
   \subsection{Objectives}
-  This module's main purpose is to act as a safety mechanism guarding an appliance \footnote{An assembly that uses between 100 watts and 1000 watts of pwoer.} against failure - specifically over-current and fire. A paraphrased list of specified objectives are as follows:
+  This module's main purpose is to act as a safety mechanism guarding an appliance \footnote{An assembly that uses between 100 watts and 1000 watts of power.} against failure - specifically over-current and fire. A paraphrased list of specified objectives are as follows:
 
   \begin{itemize}
   \item The module must not be tied to the architecture of any particular appliance in a critical way. 
@@ -201,52 +201,63 @@
     \paragraph{Physical Response Systems}
     Sensory signals are also part of the requirement of the system, with controllable LED and buzzer components marked as required.
 
-    \subsection{Input and Output} 
-    There are two main types of electrical communication between system components - signal and power. The power electric behaviour is outlined as a single power supply source, followed by power modulation units that filter and deliver steady power to the components. The specifics would be determined through the design process.
+  \subsection{Input and Output} 
+  There are two main types of electrical communication between system components - signal and power. The power electric behaviour is outlined as a single power supply source, followed by power modulation units that filter and deliver steady power to the components. The specifics would be determined through the design process.
 
-    \paragraph{}
-    Signal routing was derived from required component intercommunication paths \footnote{i.e. - Must have connection from sensor to SoC, SoC to transceiver, and so on.}. The final signal profiles were reached through design, testing, and analysis of each individual signal route.
+  \paragraph{}
+  Signal routing was derived from required component intercommunication paths \footnote{i.e. - Must have connection from sensor to SoC, SoC to transceiver, and so on.}. The final signal profiles were reached through design, testing, and analysis of each individual signal route.
 
-    \paragraph{}
-    Ultimately, input and output signal levels and limits were left as an excercise for the student to develop, with reference to the specified components - both explicitly named (SoC and Transceiver), and general (sensors needed, relay).
-
-    \subsection{Power considerations}
-    As the module is going to be a safety mechanism, it is intended to stay powered at all times, thus power draw is specifically budgeted at less than 1 watt on average.
-	
-    \subsection{Developing Specifications}
-    Given the scope and requirements set out at the start of the project, a number of specifications can be extracted from the pre-determined components. These specifications come in the form of voltage levels, signal profiles, and other electrical details that actualize connections between the individual components.
-
-    It turns out the operating range and behaviour of the SoC alone is sufficient to determine specifications of all sensor circuits. Furthermore, the SoC controlled devices must necessarily respond to the signals that the chip is capable of delivering - i.e. if the chip can only provide signals at 3.3V, a switch requiring 5V cannot be directly controlled by the SoC.
-
-    \paragraph{}
-    A quick connection diagram (Figure \ref{fig:connect-diag}) helped visualise the connections. The connections go from the components in the left column to the components in the top row. (1) denotes a 3.3V connection, (2) denotes a 5V connection, (*) denotes an analog (variable voltage level) connection. A later version is shown here which includes power routing that was not done at this step. From the diagram, it was evident that most electrical connectivity is (as expected) centered around the SoC. 
+  \paragraph{}
+  Ultimately, input and output signal levels and limits were left as an excercise for the student to develop, with reference to the specified components - both explicitly named (SoC and Transceiver), and general (sensors needed, relay).
   
-    \begin{figure}[]
-      \centering
-      \caption{Connection chart detailing the input and output relationships between the components.}
-      \label{fig:connect-diag}
-      \includegraphics{connection-chart}
-    \end{figure}
+  \subsection{Power considerations}
+  As the module is going to be a safety mechanism, it is intended to stay powered at all times, thus power draw is specifically budgeted at less than 1 watt on average.
 	
-    Given this result, designing the sensor circuitry around the specifications of the EFM8BB1 SoC would be a fairly direct way to accomplish the objectives of the system.
+  \subsection{Developing Specifications}
+  Given the scope and requirements set out at the start of the project, a number of specifications can be extracted from the pre-determined components. These specifications come in the form of voltage levels, signal profiles, and other electrical details that actualize connections between the individual components.
 
+  It turns out the operating range and behaviour of the SoC alone is sufficient to determine specifications of all sensor circuits. Furthermore, the SoC controlled devices must necessarily respond to the signals that the chip is capable of delivering - i.e. if the chip can only provide signals at 3.3V, a switch requiring 5V cannot be directly controlled by the SoC.
+
+  \paragraph{}
+  A quick connection diagram (Figure \ref{fig:connect-diag}) helped visualise the connections. The connections go from the components in the left column to the components in the top row. (1) denotes a 3.3V connection, (2) denotes a 5V connection, (*) denotes an analog (variable voltage level) connection. A later version is shown here which includes power routing that was not done at this step. From the diagram, it was evident that most electrical connectivity is (as expected) centered around the SoC. 
+  
+  \begin{figure}[]
+    \centering
+    \caption{Connection chart detailing the input and output relationships between the components.}
+    \label{fig:connect-diag}
+    \includegraphics{connection-chart}
+  \end{figure}
+	
+  Given this result, designing the sensor circuitry around the specifications of the EFM8BB1 SoC would be a fairly direct way to accomplish the objectives of the system.
+  
     \subsubsection{Other Options?}
     Given the inflexible nature of the SoC being pre-selected as a fixed part of the design, forcing the SoC to behave according to the sensor output may come at significant software cost. \footnote{A cost-benefit analysis (with due consideration for the architecture) was done by the design team previous to this design cycle to select the SoC as it was likely to be the most expensive component in the module.}
-
+  
     \paragraph{}
     To further explain, a \acrlong{soc} is a collection of Application Specific Integrated Circuits \acrshort{asic} that provide additional functionality to a CPU. For the EFM8BB1 in particular, there is an \acrfull{adc} \acrshort{asic} in the chip itself that is pre-set for a certain voltage range, but with an option to use an external voltage reference. However this requires an external voltage reference: an additional complexity to implement as a hard circuit, versus simply using the SoC as-is requiring no additional board space.
   
     \paragraph{What if the SoC selection is bad?}
+    Is a very real and pertinent question to the overall success of the design. Given the needs of the module, the SoC selection was heavily based on unit price relative was heavily based on unit price relative was heavily based on unit price relative to the capabilities of the SoC. This will be further touched on in section~\ref{sec:select-core-comp}
 
+	\section{Electrical Design Cycle\label{sec:devel-electr-design}} 
+
+  Starting the design cycle with the given objectives, a simple block diagram was drawn from the connection chart to help visualize the organization of the circuits.
+
+  TODO: block diagram of subcircuits
+
+  With this visualization, it was apparent that the \acrshort{soc} took up the lion's share of connective complexity. It follows that the limitations and capabilities of the chip must be fully understood in order to .
+  
+  \subsection{Understanding the SoC}
+
+  From the connection diagram and subsequent block diagram, it was determined the SoC is the core component, having the most connections with the greatest level of complexity. Thus gaining a strong
   
 	
-	
-	
-	\section{Electrical Design Cycle\label{sec:devel-electr-design}} 
 
   With a better grasp of the problem at hand in terms of objectives, constraints, and good practice, a design cycle to produce a working electrical diagram can begin.
 
-  \subsection{\label{sec:integration}}
+  \subsection{Initial Design}
+
+  The initial circuit diagram was based on 
 
 	\subsection{Power}
   
@@ -272,6 +283,16 @@
 	\section{Component Selection}
 	
 	\section{Final Electrical Design}
+
+  \section{Conclusions}
+
+  \section{Recommendations}
+
+  \section{Discussion}
+
+  \subsection{Selecting Core Components\label{sec:select-core-comp}}
+
+  Without knowing the bus 
 	
 	
     \printglossaries
